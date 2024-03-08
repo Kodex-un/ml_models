@@ -103,3 +103,6 @@ ENV/
 .*.sw*
 *.tfrecords.*
 tags
+
+\#*
+.\#*
