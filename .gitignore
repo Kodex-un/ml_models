@@ -104,5 +104,6 @@ ENV/
 *.tfrecords.*
 tags
 
+*~
 \#*
 .\#*
