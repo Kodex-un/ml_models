@@ -302,7 +302,8 @@ def train():
 
             eval_steps = run_epoch('eval', dataset_wrapper.eval_ds, eval_step, steps_per_eval_epoch, broadcast_variables=False)
             best_metric = validation_metric()
-            logger.info('initial validation: {}, metric: {:.3f}'.format(metric.str_result(False), best_metric))
+            best_saved_path = restore_path
+            logger.info('initial validation: {}, metric: {:.3f}, path: {}'.format(metric.str_result(False), best_metric, best_saved_path))
 
         if best_metric < FLAGS.min_eval_metric:
             logger.info('setting minimal evaluation metric {:.3f} -> {} from command line arguments'.format(best_metric, FLAGS.min_eval_metric))
