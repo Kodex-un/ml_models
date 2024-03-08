@@ -10,28 +10,32 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.mixed_precision import experimental as mixed_precision
 
-#import horovod.tensorflow as hvd
 import tensorflow_addons as tfa
 
-class Hvd:
-    def __init__(self):
-        pass
+use_horovod = False
 
-    def init(self):
-        pass
+if use_horovod:
+    import horovod.tensorflow as hvd
+else:
+    class Hvd:
+        def __init__(self):
+            pass
 
-    def size(self):
-        return 1
-    def rank(self):
-        return 0
-    def local_rank(self):
-        return 0
+        def init(self):
+            pass
 
-    def DistributedGradientTape(self, tape):
-        return tape
+        def size(self):
+            return 1
+        def rank(self):
+            return 0
+        def local_rank(self):
+            return 0
 
-    def broadcast_variables(self, variables=None, root_rank=0):
-        pass
+        def DistributedGradientTape(self, tape):
+            return tape
+
+        def broadcast_variables(self, variables=None, root_rank=0):
+            pass
 
 hvd = Hvd()
 
@@ -42,8 +46,7 @@ import load_dataset
 import loss
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset_dir', type=str, required=True, default='/shared2/text_classification/datasets/multilingual_toxicity_kaggle_jigsaw_2020/',
-        help='Number of images to process in a batch')
+parser.add_argument('--dataset_dir', type=str, required=True, help='Number of images to process in a batch')
 parser.add_argument('--batch_size', type=int, default=24, help='Number of images to process in a batch')
 parser.add_argument('--num_epochs', type=int, default=1000, help='Number of epochs to run')
 parser.add_argument('--num_epochs_stage0', type=int, default=400, help='Number of epochs to run in the stage0 phase')
